@@ -1,0 +1,24 @@
+{
+  "name": "honors-project",
+  "version": "1.0.0",
+  "description": "--- **Overview**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greenitthe/honors-project.git"
+  },
+  "author": "Greenitthe (James C)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/greenitthe/honors-project/issues"
+  },
+  "homepage": "https://github.com/greenitthe/honors-project#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "pug": "^2.0.3",
+    "socketio": "^1.0.0"
+  }
+}

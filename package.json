@@ -4,7 +4,8 @@
   "description": "--- **Overview**",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "nodemon app/server.js -e js,pug",
+    "start": "node app/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   "homepage": "https://github.com/greenitthe/honors-project#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
     "pug": "^2.0.3",
-    "socketio": "^1.0.0"
+    "socket.io": "^2.1.0"
   }
 }

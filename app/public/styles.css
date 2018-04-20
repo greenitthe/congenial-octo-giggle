@@ -1,0 +1,174 @@
+/** Colors **/
+body {
+  background-color: #2f2f2f;
+}
+
+main {
+  background-color: #4f4f4f;
+  color: #4acd2f;
+}
+
+#navbar {
+  background-color: #2f2f2f;
+}
+
+#navbar li:hover {
+  background-color: #1f1f1f;
+}
+
+#navbar .active {
+  background-color: #1f1f1f;
+}
+
+.alert {
+  background-color: #e65639;
+  color: #ffffff;
+}
+
+.area {
+  background-color: #5d5d5d;
+}
+
+.module {
+  background-color: #6f6f6f;
+}
+
+.status {
+  border-bottom: 4px solid #8b8b8b;
+}
+
+.column {
+  border: 3px solid #8b8b8b;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+}
+
+.lastColumn {
+  border-right: 3px solid #8b8b8b;
+}
+
+.button {
+  background-color: #222222;
+  color: white;
+  border: 3px solid #4acd2f;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+   -khtml-user-select: none; /* Konqueror */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                not supported by any browser */
+}
+
+.button:hover {
+	background-color:#4d8f2c;
+}
+
+/* Layout */
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+main {
+  width: 94%;
+  margin: 0 3%;
+  font-family: Verdana;
+  font-size: 20px;
+  flex-grow: 1;
+}
+#headingStuff {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+#navbar ul {
+  list-style: none;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+}
+#navbar li {
+  cursor: pointer;
+
+  padding: 1rem 1rem;
+
+  font-size: 24px;
+  font-weight: bold;
+}
+.alert {
+  width: 100%;
+  font-family: Verdana;
+  font-size: 20px;
+  text-align: center;
+}
+.hidden {
+  display:none !important;
+}
+.status {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+}
+.column {
+  padding: 0.2rem;
+
+  text-align: center;
+}
+.column h2 {
+  font-size: 24px;
+}
+.column h3 {
+  font-size: 16px;
+}
+#game {
+  /*display: flex;
+  flex-direction: column;*/
+  font-size: 20px;
+}
+.area {
+  margin: 0 1rem;
+  padding: 0.5rem;
+}
+.modulesContainer {
+  /*display: flex;
+  flex-direction: column;*/
+}
+.moduleRow {
+  display: flex;
+  justify-content: center;
+}
+.module {
+  padding: 0.6rem;
+  margin: 0.4rem;
+  width: 47%;
+}
+.horizontalWrap {
+  flex-direction: row;
+}
+.horizontalWrap button {
+  margin: 0.2rem;
+  width: 4rem;
+}
+.buttonHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+.button {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0.4rem;
+  margin: 0.4rem 0;
+  text-align: center;
+}

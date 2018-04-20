@@ -1,8 +1,19 @@
 html
     head
         title= title
-    body
-        h1= message
+        link(rel="stylesheet" href="/public/styles.css")
         script(src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=' crossorigin='anonymous')
         script(src='/socket.io/socket.io.js')
-        script(src='/js/client.js')
+        script(src='/public/client.js')
+    body
+       div.alert(class=message ? "" : "hidden")
+           p= message
+       Main
+            div#headingStuff
+                h1= "brct.io"
+            nav#navbar
+                ul
+                    li#home.active
+                        ="Home"
+                    li#game
+                        ="Game"

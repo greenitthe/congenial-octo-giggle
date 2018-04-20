@@ -9,16 +9,14 @@ const io = require('socket.io')(server);
 app.set('views', path.join(__dirname, '.', 'views'));
 app.set('view engine', 'pug');
 
-app.get('/js/client.js', function(req, res) {
-  res.sendFile(path.resolve('./app/public/js/client.js'));
-})
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // GET response for '/'
 app.get('/', function (req, res) {
  
     // render the 'index' template, and pass in a few variables
-    res.render('index', { title: 'Hey', message: 'Hello there!' });
- 
+    res.render('index', { title: 'brct.io', message: 'Under Construction' });
+    //res.render('index', { title: 'brct.io', message: '' });
 });
 
 io.on('connection', function(client) {

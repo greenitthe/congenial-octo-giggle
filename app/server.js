@@ -10,6 +10,8 @@ app.set('views', path.join(__dirname, '.', 'views'));
 app.set('view engine', 'pug');
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/includes', express.static(path.join(__dirname, 'includes')));
+app.use('/nodeScripts', express.static(path.join('../', __dirname, 'node_modules')));
 
 // GET response for '/'
 app.get('/', function (req, res) {

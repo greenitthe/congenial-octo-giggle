@@ -1,23 +1,35 @@
+.parallax-window {
+  min-height: 400px;
+  background: transparent;
+}
+.container {
+  max-width: 60%;
+  margin: 0 auto;
+}
+
 /** Colors **/
 body {
-  background-color: #2f2f2f;
+  background-color: #1f1f1f;
 }
 
 main {
-  background-color: #4f4f4f;
-  color: #4acd2f;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 #navbar {
-  background-color: #2f2f2f;
+  background-color: #586385;
+  color: #d1d1d1;
 }
 
 #navbar li:hover {
   background-color: #1f1f1f;
+  color: #ffffff;
 }
 
 #navbar .active {
   background-color: #1f1f1f;
+  color: #ffffff;
 }
 
 .alert {
@@ -78,7 +90,7 @@ body {
   align-items: center;
 }
 main {
-  width: 94%;
+  width: 97%;
   margin: 0 3%;
   font-family: Verdana;
   font-size: 20px;

@@ -7,9 +7,15 @@ html
     script(src='/socket.io/socket.io.js')
     script(src='https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js')
     script(src='/public/client.js')
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
   body
-  div.alert(class=message ? "" : "hidden")
-    p= message
+  div.alertWrapper
+    input#toggle-1.closeBInput(type="checkbox")
+    div.alert(class=message ? "" : "hidden").animated.slideInDown
+      span
+        = message
+      label(for="toggle-1")
+        span.closeB(for="toggle-1")
   Main
     div#siteWrapper
       div#mainHeading.animated.zoomIn
@@ -24,11 +30,13 @@ html
             ="Game"
           li#contact.animated.flipInX
             ="Contact"
-      div#homePage.page.centerPage
-        include ../includes/home.pug
-      div#aboutPage.page.rightPage(style="display: none;")
-        include ../includes/about.pug
-      div#gamePage.page.rightPage(style="display: none;")
-        include ../includes/game.pug
-      div#contactPage.page.rightPage(style="display: none;")
-        include ../includes/contact.pug
+            
+      div#pagesWrapper
+        div#homePage.page.centerPage
+          include ../includes/home.pug
+        div#aboutPage.page.rightPage(style="display: none;")
+          include ../includes/about.pug
+        div#gamePage.page.rightPage(style="display: none;")
+          include ../includes/game.pug
+        div#contactPage.page.rightPage(style="display: none;")
+          include ../includes/contact.pug

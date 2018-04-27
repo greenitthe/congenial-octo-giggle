@@ -15,24 +15,23 @@ app.use('/nodeScripts', express.static(path.join('../', __dirname, 'node_modules
 
 // GET response for '/'
 app.get('/', function (req, res) {
- 
-    // render the 'index' template, and pass in a few variables
-    res.render('index', { title: 'brct.io', message: 'Under Construction' });
-    //res.render('index', { title: 'brct.io', message: '' });
+
+  // render the 'index' template, and pass in a few variables
+  res.render('index', { title: 'brct.io', message: 'Under Construction' });
+  //res.render('index', { title: 'brct.io', message: '' });
 });
 
 io.on('connection', function(client) {
-    console.log('Client connected...');
+  console.log('Client connected...');
 
-    client.on('join', function(data) {
-        console.log(data);
+  client.on('join', function(data) {
+    console.log(data);
 
-        client.emit('messages', 'Hello from server');
-    });
+    client.emit('messages', 'Hello from server');
+  });
 });
- 
+
 // start up the server
 server.listen(8080, function () {
-    console.log('Listening on http://localhost:8080');
+  console.log('Listening on http://localhost:8080');
 });
- 

@@ -14,7 +14,7 @@ body {
 
 main {
   background-color: #ffffff;
-  color: #000000;
+  color: #1f1f1f;
 }
 
 #navbar {
@@ -23,13 +23,42 @@ main {
 }
 
 #navbar li:hover {
-  background-color: #1f1f1f;
+  background-color: #2f2f2f;
   color: #ffffff;
 }
 
 #navbar .active {
-  background-color: #1f1f1f;
+  background-color: #1f1f1f !important;
   color: #ffffff;
+}
+
+.page-wrapper {
+  display: block;
+}
+
+.page {
+  position: fixed;
+  display: block;
+  margin: auto;
+  width: 96vw;
+  height: 25vh;
+  -webkit-transition-duration: 600ms;
+  transition-duration: 600ms;
+}
+
+.page.centerPage {
+  transform: none;
+  -webkit-transform: none;
+}
+
+.page.leftPage {
+  transform: translate(-100%);
+  -webkit-transform: translate(-100%);
+}
+
+.page.rightPage {
+  transform: translate(100%);
+  -webkit-transform: translate(100%);
 }
 
 .alert {
@@ -96,9 +125,20 @@ main {
   font-size: 20px;
   flex-grow: 1;
 }
-#headingStuff {
+
+#siteWrapper {
+  overflow-x: hidden;
+}
+
+#mainHeading {
+  -webkit-user-select: none;
+  user-select: none;
   text-align: center;
   padding: 0.5rem 0;
+}
+#navbar {
+  -webkit-user-select: none;
+  user-select: none;
 }
 #navbar ul {
   list-style: none;

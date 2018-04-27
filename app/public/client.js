@@ -1,4 +1,14 @@
 $(document).ready(function() {
+  $(".area").on("click","button",function(e){
+    e.preventDefault();
+    var clickedButton = e.target.id.substring(0,e.target.id.length - 6);
+    console.log(clickedButton);
+    socket.emit('incrementClicked', {
+      player: "Name",
+      name: clickedButton
+    })
+  })
+
   function checkLoad() {
     var prevPage = Cookies.get('pageIndex');
     if (prevPage) {
@@ -80,6 +90,9 @@ $(document).ready(function() {
     socket.emit('join', 'Hello world from client');
   });
   socket.on('messages', function(data) {
+    console.log(data);
+  });
+  socket.on('gameData', function(data) {
     console.log(data);
   });
   function init() {

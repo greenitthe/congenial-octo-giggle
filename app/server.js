@@ -21,6 +21,8 @@ app.get('/', function (req, res) {
   //res.render('index', { title: 'brct.io', message: '' });
 });
 
+var info;
+
 io.on('connection', function(client) {
   console.log('Client connected...');
 
@@ -29,6 +31,11 @@ io.on('connection', function(client) {
 
     client.emit('messages', 'Hello from server');
   });
+
+  client.on('incrementalClicked', function(data) {
+    info[data.player][data.name]++;
+    client.emit('gameData', info[data.player]);
+  })
 });
 
 // start up the server

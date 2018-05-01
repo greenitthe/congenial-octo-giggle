@@ -1,6 +1,15 @@
-h3="Process"
-p.paraMain.
-  Initially I intended to load the 'pages' as they were visited to minimize what was sent. This worked but in practice wasn't as efficient as was hoped.
-  Instead, everything just loads at once, and is separated only visually (though each page is a separate pug template). A user's page is saved via cookies.
-  Optionally, direct linking is available via parameters (#[a(target="_blank", href="http://brct.io:4000/?page=game") example]). Preference is given in the following order:
-  Parameter -> Cookie -> Homepage. 
+h3="The Process"
+div#devDiv
+  p.paraMain.
+    Initially I intended to load the 'pages' as they were visited to minimize what was sent. This worked but in practice wasn't as efficient as was hoped.
+    Instead, everything just loads at once, and is separated only visually (though each page is a separate pug template). This was a frustrating effect to develop,
+    since using any type of CSS positioning other than fixed makes an ugly horizontal scroll bar (and some weird resizing on mobile), even with overflow-x hidden,
+    yet you can't vertically scroll the page with a fixed element. To work around this I had to dynamically set the heights and overflow conditions for each
+    element beneath the body, so only the content would scroll, and so there would only be a scroll bar if necessary. If I were to do this project again,
+    I would likely use a less finnicky transition.
+  p.paraMain.
+    The user's current page is saved with cookies so they return there if they reload. Optionally, direct linking is available via parameters
+    (#[a(target="_blank", href="http://brct.io:4000/?page=game") see example]). Preference is given in the following order: Parameter -> Cookie -> Homepage.
+    
+  p.paraMain.
+    I had forgotten that redis in node uses callbacks... That was fun to rediscover after wasting an hour.

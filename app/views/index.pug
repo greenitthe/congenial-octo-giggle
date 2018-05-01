@@ -24,19 +24,19 @@ html
         ul
           li#home.animated.flipInX.active
             ="Home"
-          li#about.animated.flipInX
-            ="About"
+          li#devlog.animated.flipInX
+            ="Devlog"
           li#game.animated.flipInX
             ="Game"
-          li#contact.animated.flipInX
-            ="Contact"
+          li#myself.animated.flipInX
+            ="Myself"
             
       div#pagesWrapper
         div#homePage.page.centerPage
           include ../includes/home.pug
-        div#aboutPage.page.rightPage(style="display: none;")
+        div#devlogPage.page.rightPage(style="display: none;")
           include ../includes/about.pug
         div#gamePage.page.rightPage(style="display: none;")
           include ../includes/game.pug
-        div#contactPage.page.rightPage(style="display: none;")
+        div#myselfPage.page.rightPage(style="display: none;")
           include ../includes/contact.pug

@@ -1,0 +1,6 @@
+h3="Process"
+p.paraMain.
+  Initially I intended to load the 'pages' as they were visited to minimize what was sent. This worked but in practice wasn't as efficient as was hoped.
+  Instead, everything just loads at once, and is separated only visually (though each page is a separate pug template). A user's page is saved via cookies.
+  Optionally, direct linking is available via parameters (#[a(target="_blank", href="http://brct.io:4000/?page=game") example]). Preference is given in the following order:
+  Parameter -> Cookie -> Homepage. 

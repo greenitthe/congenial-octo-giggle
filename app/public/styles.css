@@ -1,12 +1,3 @@
-.parallax-window {
-  min-height: 400px;
-  background: transparent;
-}
-.container {
-  max-width: 60%;
-  margin: 0 auto;
-}
-
 /** Colors **/
 body {
   background-color: #1f1f1f;
@@ -14,7 +5,7 @@ body {
 
 main {
   background-color: #ffffff;
-  color: #000000;
+  color: #1f1f1f;
 }
 
 #navbar {
@@ -23,58 +14,50 @@ main {
 }
 
 #navbar li:hover {
-  background-color: #1f1f1f;
+  background-color: #2f2f2f;
   color: #ffffff;
 }
 
 #navbar .active {
-  background-color: #1f1f1f;
+  background-color: #1f1f1f !important;
   color: #ffffff;
 }
 
-.alert {
+.page-wrapper {
+  display: block;
+}
+.page {
+  position: fixed;
+  clip-path: rect(100px,100px,100px,100px);
+  display: block;
+  margin: auto;
+  width: 94vw;
+  -webkit-transition-duration: 600ms;
+  transition-duration: 600ms;
+}
+
+.page.centerPage {
+  transform: none;
+  -webkit-transform: none;
+}
+
+.page.leftPage {
+  transform: translate(-150%);
+  -webkit-transform: translate(-150%);
+}
+
+.page.rightPage {
+  transform: translate(150%);
+  -webkit-transform: translate(150%);
+}
+
+.alertWrapper {
   background-color: #e65639;
   color: #ffffff;
 }
 
-.area {
-  background-color: #5d5d5d;
-}
-
-.module {
-  background-color: #6f6f6f;
-}
-
-.status {
-  border-bottom: 4px solid #8b8b8b;
-}
-
-.column {
-  border: 3px solid #8b8b8b;
-  border-top: none;
-  border-bottom: none;
-  border-right: none;
-}
-
-.lastColumn {
-  border-right: 3px solid #8b8b8b;
-}
-
-.button {
-  background-color: #222222;
-  color: white;
-  border: 3px solid #4acd2f;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-   -khtml-user-select: none; /* Konqueror */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                not supported by any browser */
-}
-
-.button:hover {
-	background-color:#4d8f2c;
+a {
+  color: #e65639;
 }
 
 /* Layout */
@@ -90,15 +73,165 @@ body {
   align-items: center;
 }
 main {
-  width: 97%;
-  margin: 0 3%;
+  width: 100%;
   font-family: Verdana;
   font-size: 20px;
   flex-grow: 1;
 }
-#headingStuff {
+
+.button {
+  background-color: #1f1f1f;
+  color: white;
+  border: 3px solid #4acd2f;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+   -khtml-user-select: none; /* Konqueror */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                not supported by any browser */
+}
+
+.button:hover {
+	background-color:#4d8f2c;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+.button {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0.4rem;
+  margin: 0.4rem 0;
+  text-align: center;
+}
+
+.textInput {
+  cursor: text;
+  font-size: 20px;
+  padding: 0.4rem;
+  margin: 0.4rem;
+  text-align: center;
+  background-color: #1f1f1f;
+  color: white;
+  border: 3px solid #4acd2f;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+   -khtml-user-select: none; /* Konqueror */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                not supported by any browser */
+}
+
+#pinInput {
+  width: 4rem;
+}
+
+#userControls {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 3px solid #1f1f1f;
+}
+
+#logoutButton {
+  float:right;
+  margin-top: -0.3rem;
+}
+
+.paraMain {
+  margin-top: 0.5rem;
+}
+
+#pagesWrapper {
+  width: 94%;
+  margin: 1% 3%;
+}
+
+#bioImage {
+  float:left;
+  height: 200px;
+  margin: 0.5rem;
+  margin-bottom: 0rem;
+}
+
+.page p {
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.page {
+  overflow: auto;
+}
+
+#siteWrapper {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.closeBInput {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.closeBInput:checked ~ div {
+  display: none;
+}
+
+.closeBInput:checked {
+  display: none;
+}
+
+.closeB {
+  float: right;
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.closeB:hover::before, .closeB:hover::after {
+  /*insertSpinHere*/
+  background: #fffa00;
+}
+
+.closeB::before, .closeB::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  background: #fff;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 5px;
+}
+
+.closeB::before {
+  transform: rotate(45deg);
+}
+
+.closeB::after{
+  transform: rotate(-45deg);
+}
+
+#mainHeading {
+  -webkit-user-select: none;
+  user-select: none;
   text-align: center;
   padding: 0.5rem 0;
+}
+#navbar {
+  -webkit-user-select: none;
+  user-select: none;
 }
 #navbar ul {
   list-style: none;
@@ -116,71 +249,20 @@ main {
   font-size: 24px;
   font-weight: bold;
 }
-.alert {
+.alertWrapper {
   width: 100%;
+}
+.alert {
+  margin: 0.25rem 0;
   font-family: Verdana;
-  font-size: 20px;
+  font-size: 25px;
   text-align: center;
-}
-.hidden {
-  display:none !important;
-}
-.status {
-  display: flex;
-  flex-direction: row;
-
-  justify-content: center;
-}
-.column {
-  padding: 0.2rem;
-
-  text-align: center;
-}
-.column h2 {
-  font-size: 24px;
-}
-.column h3 {
-  font-size: 16px;
-}
-#game {
-  /*display: flex;
-  flex-direction: column;*/
-  font-size: 20px;
-}
-.area {
-  margin: 0 1rem;
-  padding: 0.5rem;
-}
-.modulesContainer {
-  /*display: flex;
-  flex-direction: column;*/
-}
-.moduleRow {
-  display: flex;
-  justify-content: center;
-}
-.module {
-  padding: 0.6rem;
-  margin: 0.4rem;
-  width: 47%;
-}
-.horizontalWrap {
-  flex-direction: row;
-}
-.horizontalWrap button {
-  margin: 0.2rem;
-  width: 4rem;
-}
-.buttonHolder {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 0.6rem;
+  justify-content: center;
 }
-.button {
+.alert label {
+  position: absolute;
+  right: 0;
   cursor: pointer;
-  font-size: 20px;
-  padding: 0.4rem;
-  margin: 0.4rem 0;
-  text-align: center;
+  margin-right: 1rem;
 }

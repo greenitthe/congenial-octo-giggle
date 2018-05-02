@@ -5,9 +5,9 @@ var path = require('path');
 var server = require('http').createServer(app);
 const io = require('socket.io')(server);
 var redis = require('redis');
-var client = redis.createClient();
+var rClient = redis.createClient();
 
-client.on('connect', function() {
+rClient.on('connect', function() {
   console.log('Redis connected');
 });
 
@@ -23,11 +23,10 @@ app.use('/nodeScripts', express.static(path.join('../', __dirname, 'node_modules
 app.get('/', function (req, res) {
 
   // render the 'index' template, and pass in a few variables
-  res.render('index', { title: 'brct.io', message: 'Under Construction' });
+  //res.render('index', { title: 'brct.io', message: 'Under Construction' });
+  res.render('index', { title: 'brct.io', message: 'Hello World! I am being presented today!' });
   //res.render('index', { title: 'brct.io', message: '' });
 });
-
-var info = {};
 
 io.on('connection', function(client) {
   console.log('Client connected...');
@@ -40,14 +39,17 @@ io.on('connection', function(client) {
   client.on('newUser', function(data) {
     var isAccepted = true;
     var responseMessage = "New User Accepted";
-    var fullName = data.username + "#" + data.pin;
-    if (info[fullName]) {
-      console.log("Old user logged in: '" + fullName + "'");
-      responseMessage = "Existing User Rejected";
-    }
-    else {
-      console.log("New user accepted: '" + fullName + "'");
-    }
+    var fullname = data.username + "#" + data.pin;
+    rClient.hgetall(fullname, function (err, obj) {
+      if (obj) {
+        console.log("Old user logged in: '" + fullname + "'");
+        responseMessage = "Existing User Accepted";
+      }
+      else {
+        console.log("New user accepted: '" + fullname + "'");
+        newClient(fullname);
+      }
+    });
     client.emit('userResponse', {
       accepted: isAccepted,
       responseMessage: responseMessage,
@@ -55,28 +57,81 @@ io.on('connection', function(client) {
       pin: data.pin
     });
   });
+  client.on('delUser', function(data) {
+    var isAccepted = true;
+    var responseMessage = "User Deleted";
+    var fullname = data.username + "#" + data.pin;
+    rClient.del(fullname, function (err, obj) {
+      if (obj) {
+        console.log("Deleted User: '" + fullname + "'");
+      }
+      else {
+        console.log("No User With Name: '" + fullname + "'");
+        responseMessage = "No user to delete by that name";
+      }
+    });
+    client.emit('userResponse', {
+      accepted: isAccepted,
+      responseMessage: responseMessage
+    });
+  });
   client.on('reqData', function(data) {
-    var fullName = data.username + "#" + data.pin;
-    console.log(fullName + " | reqData");
-    if (!info[fullName]) {
-      info[fullName] = {};
-      info[fullName]["ideas"] = 0;
-    }
-    console.log(info[fullName])
-    client.emit('gameData', info[fullName]);
+    var fullname = data.username + "#" + data.pin;
+    console.log(fullname + " | reqData");
+    sendData(client, fullname);
   });
   client.on('incrementalClicked', function(data) {
-    var fullName = data.username + "#" + data.pin;
-    console.log(fullName + " | " + data.type);
-    if (!info[fullName]) {
-      info[fullName] = {};
-      info[fullName][data.type] = 0;
+    var fullname = data.username + "#" + data.pin;
+    console.log(fullname, "\n", data);
+    if (data.type != "ideas") {
+      handlePurchase(fullname, data.type, data.amount);
     }
-    info[fullName][data.type]++;
-    console.log(info[fullName]);
-    client.emit('gameData', info[fullName]);
-  })
+    else {
+      incrementData(fullname, data.type, data.amount);
+    }
+    sendData(client, fullname);
+  });
 });
+
+function newClient(fullname) {
+  if (!fullname.includes("undefined")) {
+    rClient.hmset(fullname, {
+      "ideas": 0
+    });
+  }
+}
+
+function handlePurchase(fullname, type, amount) {
+  if (type == "designs") {
+    incrementData(fullname, "ideas", -100);
+  }
+  else if (type == "artwork") {
+    incrementData(fullname, "designs", -10);
+  }
+  else if (type == "functions") {
+    incrementData(fullname, "designs", -100);
+  }
+  incrementData(fullname, type, amount);
+}
+
+function incrementData(fullname, type, amount) {
+  if (!isNaN(amount) && amount !== null) {
+    rClient.hincrby(fullname, type, amount);
+  }
+}
+
+function sendData(client, fullname) {
+  rClient.hgetall(fullname, function(err, obj) {
+    if (!obj) {
+      newClient(fullname);
+      sendData(client, fullname);
+    }
+    else {
+      console.log("  ", obj);
+      client.emit('gameData', obj);
+    }
+  });
+}
 
 // start up the server
 server.listen(4000, function () {

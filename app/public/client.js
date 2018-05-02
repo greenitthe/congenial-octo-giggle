@@ -7,7 +7,7 @@ $(document).ready(function() {
       $('#gameArea').show();
       $('#userControls').show();
       $('#usernameInfo').text(username + "#" + pin);
-      tryUpdate();
+      //tryUpdate();
     }
     else {
       $('#gameArea').hide();
@@ -17,50 +17,23 @@ $(document).ready(function() {
     }
   }
 
-  $("#usernameInput").keyup(function() {
+  $("#usernameInput").keyup(function(e) {
     $("#usernameInput").val(this.value.match(/[A-z]*/));
+    if (e.which == 13) {
+      $('#submitButton').trigger("click");
+    }
   });
 
-  $("#pinInput").keyup(function() {
+  $("#pinInput").keyup(function(e) {
     $('#pinInput').val(this.value.match(/[0-9]*/));
+    if (e.which == 13) {
+      $('#submitButton').trigger("click");
+    }
   });
-
-  $("#username").on("click","button",function(e){
-    e.preventDefault();
-    var clickedButton = e.target.id.substring(0,e.target.id.length - 6);
-    console.log(clickedButton);
-    if (clickedButton == 'submit') {
-      socket.emit('newUser', {
-        username: $("#usernameInput").val(),
-        pin: $("#pinInput").val()
-      });
-    }
-  })
-  $("#userControls").on("click","button",function(e){
-    e.preventDefault();
-    var clickedButton = e.target.id.substring(0,e.target.id.length - 6);
-    console.log(clickedButton);
-    if (clickedButton == 'logout') {
-      Cookies.set('username', '');
-    }
-    console.log("Logged out." + Cookies.get('username'));
-    handleGameLogin();
-  })
-
-  $(".area").on("click","button",function(e){
-    e.preventDefault();
-    var clickedButton = e.target.id.substring(0,e.target.id.length - 6);
-    console.log(clickedButton);
-    socket.emit('incrementalClicked', {
-      username: Cookies.get('username'),
-      pin: Cookies.get('pin'),
-      type: clickedButton
-    })
-  })
 
   $("#navbar").on("click", "li", function(e) {
     //Create a target variable for less querying
-    $target = $(e.target)
+    $target = $(e.target);
     e.preventDefault();
     //If you are already on the right page, then don't bother
     if ($target.hasClass("active")) {
@@ -68,8 +41,8 @@ $(document).ready(function() {
     } else {
       //If you aren't, set this as the active page, change screen
       var activePage = $('#navbar').find('.active');
-      activePage.removeClass('active')
-      $target.addClass('active')
+      activePage.removeClass('active');
+      $target.addClass('active');
 
       if (activePage.index() > $target.index()) {
         handleScreenSwap(activePage.index(), $target.index(), true); //active is left, so new is right
@@ -83,7 +56,7 @@ $(document).ready(function() {
 
   function handleScreenSwap(curPageIndex, nextPageIndex, isRight) {
     $('#' + $('#navbar li')[nextPageIndex].id + 'Page').show();
-    if (isRight == false) {
+    if (isRight === false) {
       for (var i = curPageIndex; i < nextPageIndex; i++) {
         $('#' + $('#navbar li')[i].id + 'Page').removeClass('centerPage rightPage leftPage');
         $('#' + $('#navbar li')[i].id + 'Page').addClass('leftPage');
@@ -103,7 +76,7 @@ $(document).ready(function() {
   }
 
   function saveScreen(targetID) {
-    console.log(targetID);
+    //console.log(targetID);
     Cookies.set('page', targetID);
   }
 
@@ -115,7 +88,7 @@ $(document).ready(function() {
     for (i=0; i < URLVariables.length; i++) {
       parameterName = URLVariables[i].split('=');
 
-      if (parameterName[0] === "page" && parameterName[1] !== undefined) {
+      if (parameterName[0] === "page" && parameterName[1] != undefined) {
         var IDs = [];
         $("#navbar").find("li").each(function() { IDs.push(this.id); });
         if ($.inArray(parameterName[1], IDs) >= 0) {
@@ -128,7 +101,7 @@ $(document).ready(function() {
   function loadScreen() {
     var loadedPage = Cookies.get('page');
     if (loadedPage) {
-      console.log("Resuming at page: " + loadedPage);
+      //console.log("Resuming at page: " + loadedPage);
       var target = $('#navbar').find('#' + loadedPage);
 
       var activePage = $('#navbar').find('.active');
@@ -144,51 +117,12 @@ $(document).ready(function() {
     }
   }
 
-  var socket = io.connect('http://brct.io:4000');
-  socket.on('connect', function(data) {
-    socket.emit('join', 'Hello world from client');
-  });
-  socket.on('messages', function(data) {
-    console.log("message: " + data);
-  });
-  socket.on('gameData', function(data) {
-    console.log(data);
-    $("#ideasStat").text("Ideas: " + data.ideas);
-  });
-  socket.on('userResponse', function(data) {
-    if (data.accepted == true) {
-      $('#usernameInput').val('');
-      $('#pinInput').val('');
-      Cookies.set('username', data.username);
-      Cookies.set('pin', data.pin);
-      console.log("Username set to: " + Cookies.get('username') + "#" + Cookies.get('pin'));
-      handleGameLogin();
-    }
-    else {
-      $('#pinInput').val('');
-      $('#uResponseZone').text(data.responseMessage);
-      console.log("Rejected username/pin");
-    }
-
-  });
-
-  function tryUpdate() {
-    var username = Cookies.get('username');
-    var pin = Cookies.get('pin');
-    if (username && pin) {
-      socket.emit('reqData',{
-        username: username,
-        pin: pin
-      })
-    }
-  }
-
   function init() {
     checkPageParameter();
     loadScreen();
     handleGameLogin();
 
-    window.setInterval(tryUpdate, 2000);
+    $("#designsSet").hide();
   }
 
   init();

@@ -12,4 +12,35 @@ div#devDiv
     (#[a(target="_blank", href="http://brct.io:4000/?page=game") see example]). Preference is given in the following order: Parameter -> Cookie -> Homepage.
     
   p.paraMain.
-    I had forgotten that redis in node uses callbacks... That was fun to rediscover after wasting an hour.
+    I had forgotten that redis in node uses callbacks... That was fun to rediscover after wasting an hour. Even after fixing that issue, callbacks are really inconvenient,
+    and I struggled to understand promises well enough to use them instead for a few particular cases (namely trying to buy new things). A possible way around this would be
+    to use then-redis, another framework, instead of node_redis.
+    
+  p.paraMain.
+    There is one bug that I cannot figure out, let alone fix, though I've narrowed down the culprit to socket.emit. Basically, when connecting on a mobile device,
+    it can take a long time either for the socket to actually emit a request for data (after it's been called though... so something very backend to socket.io if so)
+    or for it to be parsed by the server. My best guess is that something client-side is the issue. I tried to make sure that the emission was delayed till after the
+    page was certain it had a connection to the server, but that didn't help. The temporary fix was to add a loading screen to the game between loading the page and
+    receiving a response with client data. A more final solution has thus far eluded me. Even more infuriating, it was difficult to debug this because, as I found out
+    while troubleshooting, that the Chrome Remote Debugging tool uses the local browser to process JS rather than the remote device's. This meant that when I plugged
+    my phone in to debug, the problem would mysteriously disappear, and the page worked as flawlessly as on desktop.
+  p.paraMain.
+    Given more time, I would have liked to make the underlying systems much more streamlined, dynamic, and efficient. Things like the refactoring how I handle redis queries
+    and leveling up (ex: increasing cost using some formula for each amount purchased). Perhaps adding in some other features that I quite like such as 'fields' that
+    'grow' in an idle fashion, providing passive income, #[a(target="_blank", href="https://github.com/greenitthe/final-project") like in my webtech final project]. One function that
+    I was very happy with was printStats() in game.js (see below), since it allows for dynamically updating the stats (the values for each item) in the game - no hard-coding
+    required. If I could have gotten the rest of the page to that level, and perhaps atomized my functions a bit better, I would have been much happier.
+  pre.codeblock.
+    function printStats(data) {
+      var entries = Object.entries(data);
+      for (var i = 0; i < entries.length; i++) {
+        var pair = entries[i];
+        var keyObj = $('#' + pair[0] + 'Stat');
+        if (keyObj) {
+          keyObj.text(upperFirst(pair[0]) + ': ' + pair[1]);
+        }
+      }
+    }
+  p.paraMain.
+    Nonetheless, I am overall very satisfied with the project, and appreciate the experience it helped me gain. Sometimes to get something right, you first have to learn
+    how to get it wrong.
